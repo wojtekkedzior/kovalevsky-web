@@ -1,4 +1,4 @@
-package kovalevsky.service;
+package kovalevsky.services;
 
 import java.util.Date;
 
@@ -24,5 +24,4 @@ public class VisitCounterService {
     
     visitCounterRepository.save(findOne);
   }
-  
 }

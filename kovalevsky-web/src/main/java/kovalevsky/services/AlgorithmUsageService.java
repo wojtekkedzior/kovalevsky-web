@@ -1,7 +1,7 @@
-package kovalevsky.service;
+package kovalevsky.services;
 
-import kovalevsky.app.Algorithms;
 import kovalevsky.domain.AlgorithmUsage;
+import kovalevsky.imaging.Algorithms;
 import kovalevsky.repositories.AlgorithmUsageRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +20,4 @@ public class AlgorithmUsageService {
     findByAlgorithm.setUsageCount(findByAlgorithm.getUsageCount() + 1);
     algorithmUsageRepository.save(findByAlgorithm);
   }
-  
 }

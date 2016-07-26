@@ -3,8 +3,8 @@ package kovalevsky;
 
 import javax.servlet.Filter;
 
-import kovalevsky.app.DataProcessor;
 import kovalevsky.config.CORSFilter;
+import kovalevsky.imaging.DataProcessor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

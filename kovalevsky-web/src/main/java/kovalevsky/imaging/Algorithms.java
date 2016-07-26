@@ -1,4 +1,4 @@
-package kovalevsky.app;
+package kovalevsky.imaging;
 
 public enum Algorithms {
   
@@ -9,7 +9,7 @@ public enum Algorithms {
   MEDIAN ("Median"),
   FAST_AVERAGE ("Fast Average"),
   FAST_AVERAGE_ZERO_PADDED ("Fast Average Zero Padded"),
-  FAST_AVERAGE_BOUNDARY ("Fast Average Boundary"),
+  FAST_AVERAGE_BOUNDARY ("Fast Average Zero Boundary"),
   FAST_AVERAGE_REFLECTED ("Fast Average Reflected");
   
   private String name;
@@ -25,5 +25,18 @@ public enum Algorithms {
   public void setName(String name) {
     this.name = name;
   }
+  
+  public static Algorithms fromString(String text) {
+    if (text != null) {
+      for (Algorithms b : Algorithms.values()) {
+        if (text.equalsIgnoreCase(b.getName())) {
+          return b;
+        }
+      }
+    }
+    return null;
+  }
+  
+
 
 }

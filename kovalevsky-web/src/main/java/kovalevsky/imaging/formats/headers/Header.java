@@ -1,4 +1,4 @@
-package kovalevsky.header;
+package kovalevsky.imaging.formats.headers;
 
 import java.util.ArrayList;
 import java.util.HashMap;

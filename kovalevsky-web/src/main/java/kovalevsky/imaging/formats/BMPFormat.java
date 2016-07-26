@@ -7,10 +7,10 @@
  * and open the template in the editor.
  */
 
-package kovalevsky.imageFileFormat;
+package kovalevsky.imaging.formats;
 
-import kovalevsky.header.BMPHeader;
-import kovalevsky.header.Header;
+import kovalevsky.imaging.formats.headers.BMPHeader;
+import kovalevsky.imaging.formats.headers.Header;
 
 /**
  * Provides support for the Window Bitmap format.

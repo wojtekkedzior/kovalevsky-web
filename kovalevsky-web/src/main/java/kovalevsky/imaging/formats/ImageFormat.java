@@ -9,10 +9,10 @@
  * 
  */
 
-package kovalevsky.imageFileFormat;
+package kovalevsky.imaging.formats;
 
-import kovalevsky.app.CorruptHeaderException;
-import kovalevsky.header.Header;
+import kovalevsky.imaging.CorruptHeaderException;
+import kovalevsky.imaging.formats.headers.Header;
 
 /**
  * Super class to all image format classes.  Defines methods required by all 
@@ -24,7 +24,6 @@ public abstract class ImageFormat {
 	protected int[] rawImageData;
 	protected int width;
 	protected int height;
-//	protected Header header;
 	
 	abstract public Header getHeader();
 	abstract public int[] getCompleteImage(int[] data) throws CorruptHeaderException;

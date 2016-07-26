@@ -10,12 +10,12 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 
-import kovalevsky.app.Algorithms;
-import kovalevsky.app.DataProcessor;
-import kovalevsky.imageFileFormat.BMPFormat;
-import kovalevsky.imageFileFormat.ImageFormat;
-import kovalevsky.service.AlgorithmUsageService;
-import kovalevsky.service.VisitCounterService;
+import kovalevsky.imaging.Algorithms;
+import kovalevsky.imaging.DataProcessor;
+import kovalevsky.imaging.formats.BMPFormat;
+import kovalevsky.imaging.formats.ImageFormat;
+import kovalevsky.services.AlgorithmUsageService;
+import kovalevsky.services.VisitCounterService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,7 +128,7 @@ public class FileUploadController {
       return new ModelAndView("uploadForm");
     }
     
-    Algorithms valueOf = Algorithms.valueOf(algorithm.toUpperCase());
+    Algorithms valueOf = Algorithms.fromString(algorithm);
     
     switch (valueOf) {
     case FAST_AVERAGE:
@@ -145,7 +145,7 @@ public class FileUploadController {
       break;
     case FAST_AVERAGE_ZERO_PADDED:
       windowSize = checkWindowSize(windowSize);
-      dataProcessor.fastAverageZeroBoundry(imageFormat, Integer.parseInt(windowSize));
+      dataProcessor.fastAverageZeroPadded(imageFormat, Integer.parseInt(windowSize));
       break;
     case LAPLACIAN:
       dataProcessor.newLaplacian(imageFormat);
