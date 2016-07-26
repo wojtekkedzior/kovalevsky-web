@@ -1,4 +1,4 @@
-package kovalevsky.service;
+package kovalevsky.services;
 
 import kovalevsky.app.Algorithms;
 import kovalevsky.domain.AlgorithmUsage;
@@ -20,5 +20,4 @@ public class AlgorithmUsageService {
     findByAlgorithm.setUsageCount(findByAlgorithm.getUsageCount() + 1);
     algorithmUsageRepository.save(findByAlgorithm);
   }
-  
 }

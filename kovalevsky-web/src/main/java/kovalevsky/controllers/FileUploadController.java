@@ -14,8 +14,8 @@ import kovalevsky.app.Algorithms;
 import kovalevsky.app.DataProcessor;
 import kovalevsky.imageFileFormat.BMPFormat;
 import kovalevsky.imageFileFormat.ImageFormat;
-import kovalevsky.service.AlgorithmUsageService;
-import kovalevsky.service.VisitCounterService;
+import kovalevsky.services.AlgorithmUsageService;
+import kovalevsky.services.VisitCounterService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
