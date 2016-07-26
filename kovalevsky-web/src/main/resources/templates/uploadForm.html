@@ -1,0 +1,180 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<div th:if="${message}">
+		<h2 th:text="${message}" />
+	</div>
+
+	<!-- 	<div>
+		<form method="POST" enctype="multipart/form-data" action="/">
+			<table>
+				<tr>
+					<td>File to upload:</td>
+					<td><input type="file" name="file" /></td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td><select th:field="*{type}">
+							<option th:each="type : ${type}" th:value="${type}"
+								th:text="${type.getName()}"></option>
+					</select></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Upload" /></td>
+				</tr>
+			</table>onchange="this.form.submit()
+		</form>
+	</div> -->
+
+
+
+
+	<div>
+		<form action="#" th:action="@{/}" enctype="multipart/form-data"
+			method="post">
+			<table>
+				<tr>
+					<td>File to upload:</td>
+					<td><input type="file" name="file" /></td>
+				</tr>
+				<!-- 	<tr>
+					<td></td>
+					<td><select th:name="*{algorithms}">
+							<option th:each="algorithms : ${algorithms}"
+								th:value="${algorithms.getName()}"
+								th:text="${algorithms.getName()}"></option>
+					</select></td>
+				</tr> -->
+
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Upload" /></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Sample (Lena)" /></td>
+				</tr>
+			</table>
+			<br />
+		</form>
+	</div>
+
+	<form action="/update" method="POST">
+		<label for="algorithSelect">Algorithm:</label> <select
+			name="algorithm" id="algorithm" title="Algorithm"
+			onchange="checkWindowSize(this); checkSigma(this);">
+			<option value="Original">Original</option>
+			<option value="Laplacian">Laplacian</option>
+			<option value="Sobel">Sobel</option>
+			<option value="Sigma">Sigma</option>
+			<option value="Median">Median</option>
+			<option value="Fast Average">Fast Average</option>
+			<option value="Fast Average Zero Boundary">Fast Average Zero
+				Boundary</option>
+			<option value="Fast Average Zero Padded">Fast Average Zero
+				Padded</option>
+			<option value="Fast Average Reflected">Fast Average
+				Reflected</option>
+		</select> <br />
+
+		<script>
+		function setSelectValue (id, val) {
+		    document.getElementById(id).value = val;
+		}
+		</script>
+
+		<script>
+			function checkSigmaOnLoad(that, value) {
+				if(that == "Sigma") {
+					document.getElementById("sigmaDiv").style.display = "block";
+					document.getElementById("sigma").value = value;
+				} else {
+					document.getElementById("sigmaDiv").style.display = "none";
+				}
+			}
+		</script>
+
+		<script>
+			function checkWindowSizeOnLoad(that, value) {
+				if (that == "Sigma" || that == "Median" || that == "Fast Average" ||
+						that == "Fast Average Zero Boundary" || that == "Fast Average Zero Padded" || that == "Fast Average Reflected") {
+					document.getElementById("windowsSizeDiv").style.display = "block";
+					document.getElementById("windowSize").value = value;
+				} else {
+					document.getElementById("windowsSizeDiv").style.display = "none";
+				}
+			}
+		</script>
+
+		<br />
+
+		<div id="windowsSizeDiv" style="display: none;">
+			<label for="windowSize">Window size:</label> <input type="text"
+				id="windowSize" name="windowSize" /> <br /> <br />
+			<script>
+				function checkWindowSize(that) {
+					if (that.value == "Sigma" || that.value == "Median" || that.value == "Fast Average" ||
+							that.value == "Fast Average Zero Boundary" || that.value == "Fast Average Zero Padded" || that.value == "Fast Average Reflected") {
+						document.getElementById("windowsSizeDiv").style.display = "block";
+					} else {
+						document.getElementById("windowsSizeDiv").style.display = "none";
+					}
+				}
+			</script>
+		</div>
+
+		<div id="sigmaDiv" style="display: none;">
+			<label for="sigma">Sigma:</label> <input type="text" id="sigma"
+				name="sigma" /> <br /> <br />
+			<script>
+				function checkSigma(that) {
+					if(that.value == "Sigma") {
+						document.getElementById("sigmaDiv").style.display = "block";
+					} else {
+						document.getElementById("sigmaDiv").style.display = "none";
+					}
+				}
+			</script>
+		</div>
+
+		<!-- Handle when coming back from the server. -->
+		<script type="text/javascript" th:inline="javascript">
+		    /*<![CDATA[*/
+            setSelectValue('algorithm', [[${selectedAlgorithm}]]);
+              
+            checkSigmaOnLoad([[${selectedAlgorithm}]], [[${sigma}]]); 
+            checkWindowSizeOnLoad([[${selectedAlgorithm}]], [[${windowSize}]]); 
+             
+		    /*]]>*/
+		</script>
+
+		<input type="submit" value="Format" />
+	</form>
+
+	<div>
+
+
+		<table>
+			<tr>
+				<td><label for="filteredImageLabel">Filtered image:</label></td>
+				<td><label for="originalImageLabel">Original image:</label></td>
+			</tr>
+			<tr>
+				<td><img th:src="@{/image}" /></td>
+				<td><img th:src="@{/originalImage}" /></td>
+			</tr>
+		</table>
+
+	</div>
+
+
+	<!-- 	<div>
+		<ul>
+			<li th:each="file : ${files}"><a th:href="${file.href}"
+				th:text="${file.rel}" /></li>
+		</ul>
+	</div> -->
+
+</body>
+</html>
