@@ -7,11 +7,11 @@
  * and open the template in the editor.
  */
 
-package kovalevsky.app;
+package kovalevsky.imaging;
 
 import java.util.ArrayList;
 
-import kovalevsky.imageFileFormat.ImageFormat;
+import kovalevsky.imaging.formats.ImageFormat;
 
 /**
  * Provides all algorithms implemented by Kovalewsky.

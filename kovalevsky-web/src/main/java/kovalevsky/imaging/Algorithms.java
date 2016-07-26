@@ -1,4 +1,4 @@
-package kovalevsky.app;
+package kovalevsky.imaging;
 
 public enum Algorithms {
   

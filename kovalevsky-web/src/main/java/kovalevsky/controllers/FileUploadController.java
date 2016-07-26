@@ -10,10 +10,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 
-import kovalevsky.app.Algorithms;
-import kovalevsky.app.DataProcessor;
-import kovalevsky.imageFileFormat.BMPFormat;
-import kovalevsky.imageFileFormat.ImageFormat;
+import kovalevsky.imaging.Algorithms;
+import kovalevsky.imaging.DataProcessor;
+import kovalevsky.imaging.formats.BMPFormat;
+import kovalevsky.imaging.formats.ImageFormat;
 import kovalevsky.services.AlgorithmUsageService;
 import kovalevsky.services.VisitCounterService;
 

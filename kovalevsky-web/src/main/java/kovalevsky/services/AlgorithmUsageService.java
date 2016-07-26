@@ -1,7 +1,7 @@
 package kovalevsky.services;
 
-import kovalevsky.app.Algorithms;
 import kovalevsky.domain.AlgorithmUsage;
+import kovalevsky.imaging.Algorithms;
 import kovalevsky.repositories.AlgorithmUsageRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

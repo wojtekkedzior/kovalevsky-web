@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package kovalevsky.imageFileFormat;
+package kovalevsky.imaging.formats;
 
 /**
  * Provides support for the JPEG format.  NOT FUNCTIONAL.
