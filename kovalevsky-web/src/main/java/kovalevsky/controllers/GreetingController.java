@@ -20,9 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class GreetingController {
 
-  @Autowired
-  private VisitCounterRepository imageRepository;
-
   @RequestMapping("/greeting")
   public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
 
