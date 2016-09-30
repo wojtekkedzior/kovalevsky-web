@@ -10,18 +10,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 
-import kovalevsky.imaging.Algorithms;
-import kovalevsky.imaging.DataProcessor;
-import kovalevsky.imaging.formats.BMPFormat;
-import kovalevsky.imaging.formats.ImageFormat;
-import kovalevsky.services.AlgorithmUsageService;
-import kovalevsky.services.VisitCounterService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +28,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kovalevsky.imaging.Algorithms;
+import kovalevsky.imaging.DataProcessor;
+import kovalevsky.imaging.formats.BMPFormat;
+import kovalevsky.imaging.formats.ImageFormat;
+import kovalevsky.imaging.formats.headers.BMPHeader;
+import kovalevsky.services.AlgorithmUsageService;
+import kovalevsky.services.VisitCounterService;
 
 @Controller
 @Scope("session")
@@ -137,7 +137,17 @@ public class FileUploadController {
       break;
     case FAST_AVERAGE_BOUNDARY:
       windowSize = checkWindowSize(windowSize);
+      System.err.println(((BMPHeader) imageFormat.getHeader()).getSize());
       dataProcessor.fastAverageZeroBoundry(imageFormat, Integer.parseInt(windowSize));
+      //TODO obviously have to figure out these numbers on the fly
+		BMPHeader header = (BMPHeader) imageFormat.getHeader();
+		header.setSize(261178);
+		header.setWidth(510);
+		header.setHeight(510);
+		
+		imageFormat.setHeight(510);
+		imageFormat.setWidth(510);
+      
       break;
     case FAST_AVERAGE_REFLECTED:
       windowSize = checkWindowSize(windowSize);
