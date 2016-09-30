@@ -120,7 +120,7 @@ public final class DataProcessor {
    *          window size.
    * @return filtered image data.
    */
-  private int[] fastAverageZeroBoundry(int[] rawData, int NX, int NY, int hWind) {
+  public int[] fastAverageZeroBoundry(int[] rawData, int NX, int NY, int hWind) {
     if (NX != NY) {
       // error an return.
     }
@@ -130,6 +130,8 @@ public final class DataProcessor {
     ArrayList<int[]> secondList = new ArrayList<int[]>();
 
     int[] zeroBoundry = fastAverage(rawData, NX, NY, hWind);
+    
+//    return zeroBoundry;
 
     // split the image into rows, there should be NX amount of rows.
     for (int i = 0; i < NX; i++) {
