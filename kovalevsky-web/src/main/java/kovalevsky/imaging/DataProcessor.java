@@ -10,6 +10,7 @@
 package kovalevsky.imaging;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kovalevsky.imaging.formats.ImageFormat;
 
@@ -120,79 +121,45 @@ public final class DataProcessor {
    *          window size.
    * @return filtered image data.
    */
-  public int[] fastAverageZeroBoundry(int[] rawData, int NX, int NY, int hWind) {
-    if (NX != NY) {
-      // error an return.
-    }
+	public int[] fastAverageZeroBoundry(int[] rawData, int NX, int NY, int hWind) {
+		if (NX != NY) {
+			//TODO no. need to handle this
+			// error an return. 
+		}
 
-    // these hold the rows.
-    ArrayList<int[]> firstList = new ArrayList<int[]>();
-    ArrayList<int[]> secondList = new ArrayList<int[]>();
+		ArrayList<int[]> firstList = new ArrayList<int[]>(300000);
 
-    int[] zeroBoundry = fastAverage(rawData, NX, NY, hWind);
-    
-//    return zeroBoundry;
+		int[] zeroBoundry = fastAverage(rawData, NX, NY, hWind);
 
-    // split the image into rows, there should be NX amount of rows.
-    for (int i = 0; i < NX; i++) {
-      int x = 0;
-      int[] row = new int[NX];
+		// split the image into rows, there should be NX amount of rows. and
+		// then ignore the first and last byte of each row
+		//TODO not so sure if we can just ignore the first and last row.  I would imagine that we need to ingore the same amount of pixels as the window size.
+		for (int i = 1; i < NX - 1; i++) {
+			int x = 1;
+			int[] row = new int[NX];
 
-      while (x != NX) {
-        row[x] = zeroBoundry[(i * NX) + x];
-        x++;
-      }
+			while (x != (NX - 1)) {
+				row[x] = zeroBoundry[(i * NX) + x];
+				x++;
+			}
 
-      // dont add the first row and the last row.
-      if (i == 0)
-        continue;
-      if (i == (NX - 1))
-        continue;
+			firstList.add(row);
+		}
 
-      firstList.add(row);
-    }
+		List<Integer> modifiedDataAsList = new ArrayList<Integer>();
 
-    // in each row we need to remove the 1st and last bytes; This will
-    // evntually appear as the first and last column being removed.
-    for (int i = 0; i < firstList.size(); i++) {
-      int[] ar = new int[firstList.get(i).length - 2];
-      int[] tmp = firstList.get(i);
+		for (int[] row : firstList) {
+			for (int i : row) {
+				modifiedDataAsList.add(i);
+			}
+		}
 
-      for (int j = 0; j < ar.length; j++) {
-        ar[j] = tmp[j + 1];
-      }
+		int[] arr = modifiedDataAsList.stream().mapToInt(i -> i).toArray();
+		//TODO need to log the sizes (including the window size and NX,NY)
+		// System.err.println(arr.length);
 
-      secondList.add(ar);
-    }
-
-    // now put all the rows in the secondList into the one array.
-    int[] modifiedData = new int[(int) Math.pow((NX - 2), 2)]; // if
-    // NX=NY=8,
-    // then
-    // after
-    // this
-    // NX=NY=6
-    // so the
-    // over all
-    // size will
-    // be 36
-    // possible solution to make it shape independant is to say (NX - 2) *
-    // (NY - 2)
-
-    // for(int i = 0; i < ((NX - 2) * (NY - 2)); i++)
-    for (int i = 0; i < secondList.size(); i++) {
-      int[] tmp = secondList.get(i);
-
-      int size = 0;
-
-      while (size < tmp.length) {
-        modifiedData[i * tmp.length + size] = tmp[size];
-        size++;
-      }
-    }
-
-    return modifiedData;
-  }
+		return arr;
+	}
 
   // use 0 for al missing pixels
   // Use of this function does not require modification of any image format
