@@ -127,7 +127,7 @@ public final class DataProcessor {
 			// error an return. 
 		}
 
-		ArrayList<int[]> firstList = new ArrayList<int[]>(300000);
+		ArrayList<int[]> firstList = new ArrayList<int[]>();
 
 		int[] zeroBoundry = fastAverage(rawData, NX, NY, hWind);
 
