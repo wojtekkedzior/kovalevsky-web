@@ -122,6 +122,9 @@ public class FileUploadController {
     
     log.info("update image. algorithm=" + algorithm + ", window size: " + windowSize + ", sigma: " + sigma);
     
+    int wSize = Integer.parseInt(windowSize);
+    int sSize = Integer.parseInt(sigma);
+    
     switch (valueOf) {
     case FAST_AVERAGE:
       dataProcessor.fastAverage(imageFormat, Integer.parseInt(windowSize));
@@ -140,19 +143,19 @@ public class FileUploadController {
       
       break;
     case FAST_AVERAGE_REFLECTED:
-      dataProcessor.fastAverageReflected(imageFormat, Integer.parseInt(windowSize));
+      dataProcessor.fastAverageReflected(imageFormat, wSize);
       break;
     case FAST_AVERAGE_ZERO_PADDED:
-      dataProcessor.fastAverageZeroPadded(imageFormat, Integer.parseInt(windowSize));
+      dataProcessor.fastAverageZeroPadded(imageFormat, wSize);
       break;
     case LAPLACIAN:
       dataProcessor.newLaplacian(imageFormat);
       break;
     case MEDIAN:
-      dataProcessor.median(imageFormat, Integer.parseInt(windowSize));
+      dataProcessor.median(imageFormat, wSize);
       break;
     case SIGMA:
-      dataProcessor.sigma(imageFormat, Integer.parseInt(windowSize), Integer.parseInt(sigma));
+      dataProcessor.sigma(imageFormat, wSize, sSize);
       break;
     case SOBEL:
       dataProcessor.sobelFilter(imageFormat);
