@@ -10,6 +10,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class FileUploadController {
 
   @RequestMapping(method = RequestMethod.GET, value = "/image")
   @ResponseBody
-  public ResponseEntity<?> getFilePicutre() throws FileNotFoundException {
+  public ResponseEntity<?> getModifiedImage() throws FileNotFoundException {
     final HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.IMAGE_PNG);
 
@@ -75,7 +76,6 @@ public class FileUploadController {
     }
 
     byte[] completeImageAsByteArray = imageFormat.getCompleteImageAsByteArray();
-    imageFormat = new BMPFormat(read(originalFile));
 
     return new ResponseEntity<byte[]>(completeImageAsByteArray, headers, HttpStatus.CREATED);
   }
@@ -91,7 +91,7 @@ public class FileUploadController {
   public ResponseEntity<?> getOriginalImage() throws FileNotFoundException {
     final HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.IMAGE_PNG);
-
+    
     if (originalFile == null) {
       return new ResponseEntity<byte[]>(new byte[0], headers, HttpStatus.OK);
     }
@@ -111,18 +111,8 @@ public class FileUploadController {
 
   @RequestMapping(method = RequestMethod.POST, value = "/update")
   @ResponseBody
-  public ModelAndView updateImage(@RequestParam("algorithm") String algorithm, @RequestParam("windowSize") String windowSize,
-      @RequestParam("sigma") String sigma, RedirectAttributes redirectAttributes, Model model) throws IOException {
-
-    //check window size is less then file width...
-    
-    if(windowSize.isEmpty()) {
-      windowSize = "0";
-    } 
-    
-    if(sigma.isEmpty()) {
-      sigma = "0";
-    }
+  public ModelAndView updateImage(@RequestParam(name="algorithm") String algorithm, @RequestParam(name="windowSize", defaultValue="0") String windowSize,
+      @RequestParam(name="sigma", defaultValue="0") String sigma, RedirectAttributes redirectAttributes, Model model) throws IOException {
 
     if (myFile == null) {
       return new ModelAndView("uploadForm");
@@ -130,14 +120,14 @@ public class FileUploadController {
     
     Algorithms valueOf = Algorithms.fromString(algorithm);
     
+    log.info("update image. algorithm=" + algorithm + ", window size: " + windowSize + ", sigma: " + sigma);
+    
     switch (valueOf) {
     case FAST_AVERAGE:
-      windowSize = checkWindowSize(windowSize);
       dataProcessor.fastAverage(imageFormat, Integer.parseInt(windowSize));
       break;
     case FAST_AVERAGE_BOUNDARY:
-      windowSize = checkWindowSize(windowSize);
-      System.err.println(((BMPHeader) imageFormat.getHeader()).getSize());
+//      System.err.println(((BMPHeader) imageFormat.getHeader()).getSize());
       dataProcessor.fastAverageZeroBoundry(imageFormat, Integer.parseInt(windowSize));
       //TODO obviously have to figure out these numbers on the fly
 		BMPHeader header = (BMPHeader) imageFormat.getHeader();
@@ -150,24 +140,18 @@ public class FileUploadController {
       
       break;
     case FAST_AVERAGE_REFLECTED:
-      windowSize = checkWindowSize(windowSize);
       dataProcessor.fastAverageReflected(imageFormat, Integer.parseInt(windowSize));
       break;
     case FAST_AVERAGE_ZERO_PADDED:
-      windowSize = checkWindowSize(windowSize);
       dataProcessor.fastAverageZeroPadded(imageFormat, Integer.parseInt(windowSize));
       break;
     case LAPLACIAN:
       dataProcessor.newLaplacian(imageFormat);
       break;
     case MEDIAN:
-      windowSize = checkWindowSize(windowSize);
       dataProcessor.median(imageFormat, Integer.parseInt(windowSize));
       break;
     case SIGMA:
-      windowSize = checkWindowSize(windowSize);
-      sigma = checkWindowSize(sigma);
-      
       dataProcessor.sigma(imageFormat, Integer.parseInt(windowSize), Integer.parseInt(sigma));
       break;
     case SOBEL:
@@ -187,21 +171,13 @@ public class FileUploadController {
     return new ModelAndView("uploadForm");
   }
 
-  private String checkWindowSize(String windowSize) {
-    try {
-      Integer.parseInt(windowSize);
-    } catch (NumberFormatException e){
-      windowSize = "0";
-    }
-    return windowSize;
-  }
-
   @RequestMapping(method = RequestMethod.POST, value = "/")
   @ResponseBody
   public ModelAndView filterImage(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, Model model) throws IOException {
 
     model.addAttribute("selectedAlgorithm", Algorithms.ORIGINAL.getName());
     
+    //TODO can't be null
     if (myFile == null) {
       myFile = File.createTempFile("pre", "suff");
       originalFile = File.createTempFile("original_pre", "original_suff");
