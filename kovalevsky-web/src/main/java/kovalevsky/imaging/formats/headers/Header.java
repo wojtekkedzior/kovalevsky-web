@@ -28,4 +28,12 @@ public abstract class Header {
 	public List<Map<String, String>> getHeaderComponents() {
 		return headerComponents;
 	}
+	
+	public abstract int getWidth();
+	public abstract int getHeight();
+
+	public abstract void setSize(int size); //size without the header
+	public abstract void setWidth(int i);
+	public abstract void setHeight(int i);
+	
 }

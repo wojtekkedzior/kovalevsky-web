@@ -46,10 +46,10 @@ public final class DataProcessor {
     return image;
   }
 
-  public ImageFormat fastAverageZeroBoundry(ImageFormat image, int hWind) {
-    image.setImageData(fastAverageZeroBoundry(image.getImageData(), image.getWidth(), image.getHeight(), hWind));
-    return image;
-  }
+//  public ImageFormat fastAverageZeroBoundry(ImageFormat image, int hWind) {
+//    image.setImageData(fastAverageZeroBoundry(image.getImageData(), image.getWidth(), image.getHeight(), hWind));
+//    return image;
+//  }
 
   public ImageFormat fastAverageZeroPadded(ImageFormat image, int hWind) {
     image.setImageData(fastAverageZeroPadded(image.getImageData(), image.getWidth(), image.getHeight(), hWind));
