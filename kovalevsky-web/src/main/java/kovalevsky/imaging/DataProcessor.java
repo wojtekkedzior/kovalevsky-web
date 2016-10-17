@@ -21,46 +21,6 @@ import kovalevsky.imaging.formats.ImageFormat;
  */
 public final class DataProcessor {
 
-  public ImageFormat median(ImageFormat image, int hWind) {
-    image.setImageData(median(image.getImageData(), image.getWidth(), image.getHeight(), hWind));
-    return image;
-  }
-
-  public ImageFormat newLaplacian(ImageFormat image) {
-    image.setImageData(newLaplacian(image.getImageData(), image.getWidth(), image.getHeight()));
-    return image;
-  }
-
-  public ImageFormat sobelFilter(ImageFormat image) {
-    image.setImageData(sobelFilter(image.getImageData(), image.getWidth(), image.getHeight()));
-    return image;
-  }
-
-  public ImageFormat sigma(ImageFormat image, int hWind, int sigma) {
-    image.setImageData(sigma(image.getImageData(), image.getWidth(), image.getHeight(), hWind, sigma));
-    return image;
-  }
-
-  public ImageFormat fastAverage(ImageFormat image, int hWind) {
-    image.setImageData(fastAverage(image.getImageData(), image.getWidth(), image.getHeight(), hWind));
-    return image;
-  }
-
-//  public ImageFormat fastAverageZeroBoundry(ImageFormat image, int hWind) {
-//    image.setImageData(fastAverageZeroBoundry(image.getImageData(), image.getWidth(), image.getHeight(), hWind));
-//    return image;
-//  }
-
-  public ImageFormat fastAverageZeroPadded(ImageFormat image, int hWind) {
-    image.setImageData(fastAverageZeroPadded(image.getImageData(), image.getWidth(), image.getHeight(), hWind));
-    return image;
-  }
-
-  public ImageFormat fastAverageReflected(ImageFormat image, int hWind) {
-    image.setImageData(fastAverageReflected(image.getImageData(), image.getWidth(), image.getHeight(), hWind));
-    return image;
-  }
-
   /**
    * Kovalevsky's Sobel filter.
    * 
@@ -75,7 +35,7 @@ public final class DataProcessor {
    * 
    * @return filtered image data.
    */
-  private int[] sobelFilter(int[] rawData, int NX, int NY) {
+  public int[] sobel(int[] rawData, int NX, int NY) {
     int[] out = new int[rawData.length];
 
     int[][] WeightsH = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
@@ -165,7 +125,7 @@ public final class DataProcessor {
   // Use of this function does not require modification of any image format
   // headers as the
   // output data is the same size as the input data.
-  private int[] fastAverageZeroPadded(int[] rawData, int NX, int NY, int hWind) {
+  public int[] fastAverageZeroPadded(int[] rawData, int NX, int NY, int hWind) {
     ArrayList<int[]> originalRows = new ArrayList<int[]>();
     int[] row;
 
@@ -280,7 +240,7 @@ public final class DataProcessor {
     return finalOutPut;
   }
 
-  private int[] fastAverageReflected(int[] rawData, int NX, int NY, int hWind) {
+  public int[] fastAverageReflected(int[] rawData, int NX, int NY, int hWind) {
     ArrayList<int[]> originalRows = new ArrayList<int[]>();
     int[] row;
 
@@ -441,7 +401,7 @@ public final class DataProcessor {
    *          window size.
    * @return filtered image data.
    */
-  private int[] fastAverage(int[] rawData, int NX, int NY, int hWind) {
+  public int[] fastAverage(int[] rawData, int NX, int NY, int hWind) {
     int avr[];
 
     avr = new int[rawData.length];
@@ -536,7 +496,7 @@ public final class DataProcessor {
    * 
    * @return filtered image data.
    */
-  private int[] median(int[] rawData, int NX, int NY, int hWind) {
+  public int[] median(int[] rawData, int NX, int NY, int hWind) {
     // The median filter for 1 byte grey level images..
     int[] hist = new int[256];
     int PixInWin = 0;
@@ -645,7 +605,7 @@ public final class DataProcessor {
    * 
    * @return filtered image data.
    */
-  private int[] sigma(int[] rawData, int NX, int NY, int hWind, int sigma) {
+  public int[] sigma(int[] rawData, int NX, int NY, int hWind, int sigma) {
     // The sigma filter for 1 byte grey level images..
     int[] hist = new int[256];
     int[] avr = new int[rawData.length];
@@ -721,7 +681,7 @@ public final class DataProcessor {
    * 
    * @return filtered image data.
    */
-  private int[] newLaplacian(int[] rawData, int NX, int NY) {
+  public int[] newLaplacian(int[] rawData, int NX, int NY) {
     int[] out = new int[NX * NY];
 
     int bias = 0; // scale factor, simiral to brightness

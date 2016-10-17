@@ -125,11 +125,11 @@ public class FileUploadController {
 
 		int wSize = Integer.parseInt(windowSize);
 		int sSize = Integer.parseInt(sigma);
-		int[] modifiedData = null;
+		int[] modifiedData = new int[0];
 
 		switch (valueOf) {
 		case FAST_AVERAGE:
-			dataProcessor.fastAverage(imageFormat, Integer.parseInt(windowSize));
+			modifiedData = dataProcessor.fastAverage(imageFormat.getImageData(), imageFormat.getWidth(), imageFormat.getHeight(), wSize); 
 			break;
 		case FAST_AVERAGE_BOUNDARY:
 			modifiedData = dataProcessor.fastAverageZeroBoundry(imageFormat.getImageData(), imageFormat.getWidth(), imageFormat.getHeight(), wSize); 
@@ -146,28 +146,29 @@ public class FileUploadController {
 
 			break;
 		case FAST_AVERAGE_REFLECTED:
-			dataProcessor.fastAverageReflected(imageFormat, wSize);
+			modifiedData = dataProcessor.fastAverageReflected(imageFormat.getImageData(), imageFormat.getWidth(), imageFormat.getHeight(), wSize);
 			break;
 		case FAST_AVERAGE_ZERO_PADDED:
-			dataProcessor.fastAverageZeroPadded(imageFormat, wSize);
+			modifiedData = dataProcessor.fastAverageZeroPadded(imageFormat.getImageData(), imageFormat.getWidth(), imageFormat.getHeight(), wSize);
 			break;
 		case LAPLACIAN:
-			dataProcessor.newLaplacian(imageFormat);
+			modifiedData = dataProcessor.newLaplacian(imageFormat.getImageData(), imageFormat.getWidth(), imageFormat.getHeight());
 			break;
 		case MEDIAN:
-			dataProcessor.median(imageFormat, wSize);
+			modifiedData = dataProcessor.median(imageFormat.getImageData(), imageFormat.getWidth(), imageFormat.getHeight(), wSize);
 			break;
 		case SIGMA:
-			dataProcessor.sigma(imageFormat, wSize, sSize);
+			modifiedData = dataProcessor.sigma(imageFormat.getImageData(), imageFormat.getWidth(), imageFormat.getHeight(), wSize, sSize);
 			break;
 		case SOBEL:
-			dataProcessor.sobelFilter(imageFormat);
+			modifiedData = dataProcessor.sobel(imageFormat.getImageData(), imageFormat.getWidth(), imageFormat.getHeight());
 			break;
 		default:
 			imageFormat = new BMPFormat(read(originalFile));
+			modifiedData = imageFormat.getImageData();
 			break;
 		}
-
+		
 		imageFormat.setImageData(modifiedData);
 		
 		algorithUsageService.incrementAlgorithmUsage(valueOf);
