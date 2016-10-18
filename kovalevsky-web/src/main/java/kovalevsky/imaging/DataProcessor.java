@@ -12,8 +12,6 @@ package kovalevsky.imaging;
 import java.util.ArrayList;
 import java.util.List;
 
-import kovalevsky.imaging.formats.ImageFormat;
-
 /**
  * Provides all algorithms implemented by Kovalewsky.
  * 
