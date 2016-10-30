@@ -14,7 +14,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter{
 	    http
 	      .antMatcher("/**")
 	      .authorizeRequests()
-	        .antMatchers("/login**", "/webjars/**", "/originalImage", "/image" , "/update")
+	        .antMatchers("/", "/login**", "/webjars/**", "/originalImage", "/image" , "/update")
 	        .permitAll()
 	      .anyRequest()
 	        .authenticated();
