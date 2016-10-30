@@ -3,6 +3,9 @@
 	<div>
 		<form action="#" th:action="@{/}" enctype="multipart/form-data"
 			method="post">
+			<input type="hidden"
+    name="${_csrf.parameterName}"
+     value="${_csrf.token}"/> 
 			<table>
 				<tr>
 					<td>File to upload:</td>
@@ -21,6 +24,10 @@
 	</div>
 
 	<form action="/update" method="POST">
+	<input type="hidden"
+    name="${_csrf.parameterName}"
+     value="${_csrf.token}"/> 
+     
 		<label for="algorithSelect">Algorithm:</label> <select
 			name="algorithm" id="algorithm" title="Algorithm"
 			onchange="checkWindowSize(this); checkSigma(this);">
@@ -70,7 +77,7 @@
 		<br />
 
 		<div id="windowsSizeDiv" style="display: none;">
-			<label for="windowSize">Window size:</label> <input type="text"
+			<label for="windowSize">Window size:</label> <input type="number"
 				id="windowSize" name="windowSize" /> <br /> <br />
 			<script>
 				function checkWindowSize(that) {
@@ -85,7 +92,7 @@
 		</div>
 
 		<div id="sigmaDiv" style="display: none;">
-			<label for="sigma">Sigma:</label> <input type="text" id="sigma"
+			<label for="sigma">Sigma:</label> <input type="number" id="sigma"
 				name="sigma" /> <br /> <br />
 			<script>
 				function checkSigma(that) {

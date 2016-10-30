@@ -179,7 +179,7 @@ public class FileUploadController {
 
 		return new ModelAndView("uploadForm");
 	}
-
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/")
 	@ResponseBody
 	public ModelAndView filterImage(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,
@@ -223,7 +223,7 @@ public class FileUploadController {
 				j++;
 			}
 		} catch (Exception e) {
-			System.err.println(e);
+			log.equals(e);
 		}
 		return data;
 	}
