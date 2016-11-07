@@ -39,7 +39,7 @@ import kovalevsky.services.VisitCounterService;
 
 @Controller
 @Scope("session")
-public class FileUploadController {
+public class FileUploadController implements Serializable {
 
 	private static final Logger log = LoggerFactory.getLogger(FileUploadController.class);
 
